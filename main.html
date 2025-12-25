@@ -1,0 +1,1706 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yepzy | Financial Services for Guest Workers</title>
+    <meta name="description" content="Modern payroll and banking solutions for H-2A/H-2B employers.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- HubSpot Tracking Script -->
+    <script type="text/javascript" id="hs-script-loader" async defer src="//js.hs-scripts.com/40107726.js"></script>
+    <style>
+        :root {
+            /* Ramp-inspired Palette using Yepzy Brand Colors */
+            --bg-dark: #0d1f1a; /* Deep Ramp-like Green/Navy mix */
+            --bg-card: #152923;
+            --text-white: #ffffff;
+            --text-muted: #94a3b8;
+            --accent-green: #caff33; /* Ramp-like lime green */
+            --accent-green-hover: #bce62b;
+            --border-color: rgba(255, 255, 255, 0.1);
+            
+            /* Spacing */
+            --container-width: 1200px;
+            --header-height: 80px;
+        }
+
+        /* RESET */
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-white);
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 16px;
+            line-height: 1.5;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* UTILS */
+        .container {
+            max-width: var(--container-width);
+            margin: 0 auto;
+            padding: 0 1.5rem;
+            width: 100%;
+        }
+
+        a { text-decoration: none; color: inherit; transition: opacity 0.2s; }
+        a:hover { opacity: 0.8; }
+
+        /* BUTTONS & INPUTS */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.75rem 1.5rem;
+            font-weight: 600;
+            border-radius: 8px;
+            font-size: 1rem;
+            cursor: pointer;
+            border: none;
+            transition: all 0.2s ease;
+        }
+
+        .btn-primary {
+            background-color: var(--accent-green);
+            color: #000;
+        }
+        .btn-primary:hover { background-color: var(--accent-green-hover); }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--text-white);
+            border: 1px solid var(--border-color);
+        }
+        .btn-outline:hover { background: rgba(255,255,255,0.05); }
+
+        .input-wrapper {
+            display: flex;
+            background: rgba(255,255,255,0.1);
+            border-radius: 8px;
+            padding: 0.25rem;
+            border: 1px solid transparent;
+            transition: border-color 0.2s;
+            max-width: 480px;
+        }
+        .input-wrapper:focus-within {
+            border-color: rgba(255,255,255,0.3);
+            background: rgba(255,255,255,0.15);
+        }
+        
+        .input-field {
+            background: transparent;
+            border: none;
+            color: white;
+            padding: 0.75rem 1rem;
+            flex-grow: 1;
+            font-size: 1rem;
+            outline: none;
+            min-width: 0;
+        }
+        .input-field::placeholder { color: rgba(255,255,255,0.5); }
+
+        /* HEADER */
+        header {
+            padding: 1.5rem 0;
+            position: absolute;
+            top: 0; left: 0; width: 100%;
+            z-index: 100;
+        }
+        .nav-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logo img { height: 32px; filter: brightness(0) invert(1); } /* Make white */
+        
+        .nav-links {
+            display: none;
+            gap: 2rem;
+            font-weight: 500;
+            font-size: 0.95rem;
+        }
+        @media(min-width: 768px) { .nav-links { display: flex; } }
+
+        .auth-buttons { display: flex; gap: 1rem; align-items: center; }
+
+        /* HERO */
+        .hero {
+            padding-top: 180px;
+            padding-bottom: 100px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+        @media(min-width: 992px) {
+            .hero-grid { grid-template-columns: 0.8fr 1.2fr; }
+        }
+
+        .hero-text h1 {
+            font-size: clamp(2.5rem, 5vw, 4.5rem);
+            line-height: 1.1;
+            font-weight: 500;
+            margin-bottom: 1.5rem;
+            letter-spacing: -0.02em;
+        }
+
+        .hero-text p {
+            font-size: 1.25rem;
+            color: var(--text-muted);
+            margin-bottom: 2.5rem;
+            max-width: 500px;
+            line-height: 1.6;
+        }
+
+        /* Rating Pill */
+        .rating-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(255,255,255,0.1);
+            padding: 0.5rem 1rem;
+            border-radius: 100px;
+            font-size: 0.875rem;
+            margin-bottom: 2rem;
+            font-weight: 500;
+        }
+        .stars { color: #F59E0B; }
+
+        /* HERO VISUALS - Device Frames */
+        .hero-visual {
+            position: relative;
+            height: 600px;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            perspective: 2000px;
+            transform-style: preserve-3d;
+        }
+        
+        /* REALISTIC MONITOR FRAME */
+        .device-desktop {
+            position: absolute;
+            right: 0;
+            top: 20px;
+            width: 85%;
+            max-width: 800px;
+            z-index: 1;
+            /* Monitor Bezel */
+            background: #111;
+            border-radius: 16px 16px 0 0; /* Top corners rounded */
+            padding: 12px 12px 0 12px; /* Bezel thickness top/sides */
+            box-shadow: 
+                0 0 0 1px #333, /* Outer edge definition */
+                0 60px 120px -20px rgba(0,0,0,0.7); /* Deep ambient shadow */
+            transform: rotateY(-5deg) rotateX(2deg);
+            transition: transform 0.3s ease;
+        }
+
+        /* Monitor Chin (Bottom Bezel) */
+        .device-desktop::after {
+            content: '';
+            display: block;
+            height: 24px;
+            background: #1a1a1a;
+            width: calc(100% + 24px); /* Extend past padding */
+            margin-left: -12px;
+            margin-top: 0;
+            border-radius: 0 0 16px 16px;
+            border-top: 1px solid #222;
+        }
+
+        /* Monitor Stand */
+        .monitor-stand {
+            position: absolute;
+            bottom: -80px; /* Adjust based on height of stand */
+            left: 50%;
+            transform: translateX(-50%);
+            width: 160px;
+            height: 80px;
+            z-index: -1;
+            perspective: 500px;
+        }
+        /* Neck */
+        .monitor-stand::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 120px;
+            height: 100%;
+            background: linear-gradient(90deg, #222, #444, #222); /* Darker stand */
+            clip-path: polygon(10% 0, 90% 0, 100% 100%, 0% 100%);
+        }
+        /* Base */
+        .monitor-stand::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 240px;
+            height: 12px;
+            background: #333;
+            border-radius: 4px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+        }
+
+        .device-desktop img {
+            width: 100%;
+            display: block;
+            border-radius: 4px; /* Screen corner radius */
+            background: #fff;
+        }
+
+        /* REALISTIC PHONE FRAME */
+        .device-mobile {
+            position: absolute;
+            right: -20px;
+            bottom: 30px;
+            width: 22%;
+            max-width: 220px;
+            min-width: 160px;
+            z-index: 10;
+            transform: translateZ(50px);
+            
+            /* iPhone Frame Styling */
+            background: #000; /* Deep black frame */
+            padding: 8px; /* Bezel */
+            border-radius: 40px;
+            box-shadow: 
+                inset 0 0 0 2px #333, /* Inner bezel highlight */
+                0 0 0 2px #111, /* Outer edge */
+                20px 40px 80px -10px rgba(0,0,0,0.9); /* Strong, realistic drop shadow */
+        }
+
+        /* Dynamic Island / Notch */
+        .device-mobile::before {
+            content: '';
+            position: absolute;
+            top: 18px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 30%;
+            height: 20px;
+            background: #000;
+            border-radius: 12px;
+            z-index: 20;
+        }
+
+        .device-mobile img {
+            width: 100%;
+            display: block;
+            border-radius: 32px; /* Screen radius matches frame */
+            border: 2px solid #000; /* Inner screen border */
+        }
+
+        /* REALISTIC CARD */
+        .device-card {
+            position: absolute;
+            right: 60px; /* Overlapping the phone */
+            bottom: 70px; /* Floating over the bottom area of the phone */
+            width: 30%;
+            max-width: 260px;
+            min-width: 180px;
+            z-index: 20;
+            transform: translateZ(80px) rotate(-12deg); /* Stronger lean */
+            
+            /* Card Physicality */
+            border-radius: 14px;
+            box-shadow: 
+                0 1px 0 rgba(255,255,255,0.2) inset, /* Top edge highlight */
+                0 30px 60px -10px rgba(0,0,0,0.8); /* Floating shadow */
+            transition: transform 0.3s;
+        }
+        
+        .device-card img {
+            width: 100%;
+            display: block;
+            border-radius: 14px;
+        }
+        
+        .device-card:hover {
+            transform: translateZ(90px) rotate(-12deg) scale(1.05) translateY(-5px);
+            z-index: 30;
+        }
+
+        /* LOGO STRIP */
+        .logo-strip {
+            margin-top: 6rem;
+            border-top: 1px solid var(--border-color);
+            padding: 2rem 0; /* Vertical padding */
+            overflow: hidden;
+            position: relative;
+            /* Removed fixed height to allow content to show */
+            opacity: 0.8;
+        }
+
+        .logo-strip::before,
+        .logo-strip::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            width: 100px;
+            height: 100%;
+            z-index: 1;
+        }
+
+        .logo-strip::before {
+            left: 0;
+            background: linear-gradient(to right, var(--bg-dark), transparent);
+        }
+
+        .logo-strip::after {
+            right: 0;
+            background: linear-gradient(to left, var(--bg-dark), transparent);
+        }
+
+        .moving-banner {
+            display: flex;
+            gap: 3rem;
+            animation: scroll 50s linear infinite;
+            white-space: nowrap;
+            width: max-content;
+        }
+
+        .moving-banner span {
+            font-weight: 700;
+            font-size: 1.25rem;
+            color: var(--text-white);
+            opacity: 0.8;
+        }
+
+        @keyframes scroll {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        /* SECTIONS */
+        .section { padding: 6rem 0; }
+        
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .feature-card {
+            background: var(--bg-card);
+            padding: 2rem;
+            border-radius: 16px;
+            border: 1px solid var(--border-color);
+        }
+        .feature-card h3 { margin: 1rem 0 0.5rem; font-size: 1.5rem; }
+        .feature-card p { color: var(--text-muted); }
+
+        .icon-circle {
+            width: 48px; height: 48px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            color: var(--accent-green);
+        }
+
+        /* CASE STUDIES CAROUSEL */
+        .case-studies {
+            background: rgba(255,255,255,0.02);
+            border-top: 1px solid var(--border-color);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .carousel-container {
+            position: relative;
+            max-width: 1000px;
+            margin: 0 auto;
+            overflow: hidden;
+        }
+
+        .carousel-track {
+            display: flex;
+            transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .carousel-slide {
+            min-width: 100%;
+            padding: 0 1rem;
+        }
+
+        .case-study-card {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+            background: var(--bg-card);
+            border-radius: 20px;
+            border: 1px solid var(--border-color);
+            padding: 2.5rem;
+            min-height: 450px;
+        }
+
+        @media (max-width: 768px) {
+            .case-study-card {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+                padding: 1.5rem;
+            }
+        }
+
+        .case-study-image {
+            width: 100%;
+            height: 280px;
+            object-fit: contain;
+            object-position: center;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            background: #fff;
+            padding: 1rem;
+        }
+
+        .case-study-content {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .case-study-quote {
+            font-size: 1.35rem;
+            font-style: italic;
+            line-height: 1.6;
+            color: var(--text-white);
+            position: relative;
+            padding-left: 1.5rem;
+            border-left: 3px solid var(--accent-green);
+        }
+
+        .case-study-quote::before {
+            content: '"';
+            position: absolute;
+            top: -10px;
+            left: -5px;
+            font-size: 4rem;
+            color: var(--accent-green);
+            opacity: 0.3;
+            font-family: Georgia, serif;
+            line-height: 1;
+        }
+
+        .case-study-attribution {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin-top: 0.5rem;
+        }
+
+        .case-study-attribution strong {
+            color: var(--text-white);
+            font-weight: 600;
+        }
+
+        .case-study-results {
+            color: var(--text-muted);
+            line-height: 1.7;
+        }
+
+        .case-study-results strong {
+            color: var(--accent-green);
+        }
+
+        .case-study-download {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--accent-green);
+            font-weight: 600;
+            font-size: 0.95rem;
+            padding: 0.75rem 1.25rem;
+            background: rgba(202, 255, 51, 0.1);
+            border-radius: 8px;
+            border: 1px solid rgba(202, 255, 51, 0.3);
+            transition: all 0.2s ease;
+            width: fit-content;
+        }
+
+        .case-study-download:hover {
+            background: rgba(202, 255, 51, 0.2);
+            border-color: var(--accent-green);
+            opacity: 1;
+        }
+
+        .carousel-nav {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 1rem;
+            margin-top: 2.5rem;
+        }
+
+        .carousel-btn {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            color: var(--text-white);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+        }
+
+        .carousel-btn:hover {
+            background: rgba(255,255,255,0.1);
+            border-color: var(--accent-green);
+        }
+
+        .carousel-btn:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+
+        .carousel-dots {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .carousel-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.2);
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .carousel-dot.active {
+            background: var(--accent-green);
+            transform: scale(1.2);
+        }
+
+        .carousel-dot:hover:not(.active) {
+            background: rgba(255,255,255,0.4);
+        }
+
+        /* VIDEO TESTIMONIAL SECTIONS - Compact Design */
+        .video-testimonial {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .video-testimonial::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--accent-green), transparent);
+            opacity: 0.3;
+        }
+
+        .video-testimonial-grid {
+            display: grid;
+            grid-template-columns: 1.1fr 0.9fr;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        @media (max-width: 992px) {
+            .video-testimonial-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+        }
+
+        .video-column {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .video-wrapper {
+            position: relative;
+            border-radius: 16px;
+            overflow: hidden;
+            background: #000;
+            box-shadow: 0 30px 60px -15px rgba(0,0,0,0.5);
+        }
+
+        .video-wrapper::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 16px;
+            padding: 2px;
+            background: linear-gradient(135deg, var(--accent-green), transparent 50%);
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            pointer-events: none;
+        }
+
+        .video-wrapper iframe {
+            width: 100%;
+            aspect-ratio: 16/9;
+            display: block;
+            border: none;
+        }
+
+        .testimonial-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .testimonial-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            background: rgba(202, 255, 51, 0.1);
+            border: 1px solid rgba(202, 255, 51, 0.3);
+            padding: 0.35rem 0.85rem;
+            border-radius: 100px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: var(--accent-green);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            white-space: nowrap;
+        }
+
+        .testimonial-info {
+            flex: 1;
+        }
+
+        .testimonial-name {
+            font-size: 1.35rem;
+            font-weight: 700;
+            margin-bottom: 0.1rem;
+            line-height: 1.2;
+        }
+
+        .testimonial-role {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        /* Compact Key Highlights */
+        .highlights-column {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .highlights-title {
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--accent-green);
+            margin-bottom: 0.5rem;
+        }
+
+        .highlight-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+            padding: 0.85rem 1rem;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .highlight-item:hover {
+            background: rgba(202, 255, 51, 0.05);
+            border-color: rgba(202, 255, 51, 0.3);
+            transform: translateX(4px);
+        }
+
+        .highlight-icon {
+            width: 28px;
+            height: 28px;
+            min-width: 28px;
+            background: rgba(202, 255, 51, 0.15);
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--accent-green);
+            transition: all 0.3s ease;
+        }
+
+        .highlight-item:hover .highlight-icon {
+            background: var(--accent-green);
+            color: #000;
+        }
+
+        .highlight-content h4 {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text-white);
+            margin-bottom: 0.2rem;
+            line-height: 1.3;
+        }
+
+        .highlight-content p {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            line-height: 1.4;
+            margin: 0;
+        }
+
+        /* Staggered animation */
+        .highlight-item {
+            opacity: 0;
+            transform: translateY(10px);
+            animation: fadeSlideIn 0.4s ease forwards;
+        }
+
+        .highlight-item:nth-child(2) { animation-delay: 0.1s; }
+        .highlight-item:nth-child(3) { animation-delay: 0.15s; }
+        .highlight-item:nth-child(4) { animation-delay: 0.2s; }
+        .highlight-item:nth-child(5) { animation-delay: 0.25s; }
+        .highlight-item:nth-child(6) { animation-delay: 0.3s; }
+
+        @keyframes fadeSlideIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Worker testimonial variant */
+        .video-testimonial.worker-testimonial {
+            background: linear-gradient(180deg, rgba(202, 255, 51, 0.02) 0%, transparent 100%);
+        }
+
+        /* FINAL CTA SECTION */
+        .final-cta {
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(135deg, rgba(202, 255, 51, 0.08) 0%, transparent 50%, rgba(202, 255, 51, 0.05) 100%);
+        }
+
+        .final-cta::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--accent-green), transparent);
+            opacity: 0.5;
+        }
+
+        .final-cta-content {
+            text-align: center;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .final-cta-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(202, 255, 51, 0.15);
+            border: 1px solid rgba(202, 255, 51, 0.3);
+            padding: 0.5rem 1.25rem;
+            border-radius: 100px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--accent-green);
+            margin-bottom: 1.5rem;
+        }
+
+        .final-cta h2 {
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 700;
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+
+        .final-cta p {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            margin-bottom: 2.5rem;
+            line-height: 1.6;
+        }
+
+        .final-cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .final-cta .btn {
+            padding: 1rem 2rem;
+            font-size: 1.05rem;
+        }
+
+        .final-cta .btn-primary {
+            box-shadow: 0 4px 20px rgba(202, 255, 51, 0.3);
+        }
+
+        .final-cta .btn-primary:hover {
+            box-shadow: 0 6px 30px rgba(202, 255, 51, 0.4);
+            transform: translateY(-2px);
+        }
+
+        /* FOOTER */
+        footer {
+            border-top: 1px solid var(--border-color);
+            padding: 4rem 0;
+            color: var(--text-muted);
+            font-size: 0.875rem;
+        }
+
+        /* Responsive Tweaks */
+        @media (max-width: 768px) {
+            .hero-text h1 { font-size: 2.5rem; }
+            .device-desktop { position: relative; width: 100%; right: auto; margin-bottom: 2rem; }
+            .device-mobile { left: 5%; bottom: -10%; }
+            .device-card { left: 40%; bottom: -5%; }
+            .hero-visual { height: 400px; margin-top: 2rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="container nav-content">
+            <a href="#" class="logo">
+                <img src="https://yepzy.com/hs-fs/hubfs/yepzy-logo-horizontal.png?height=44&name=yepzy-logo-horizontal.png&width=149" alt="Yepzy">
+            </a>
+            
+            <div class="auth-buttons">
+                <a href="#" class="btn btn-primary" onclick="openModal('demo'); return false;">See a demo</a>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="container hero-grid">
+                <!-- Left Content -->
+                <div class="hero-text">
+                    <h1>Payroll and compliance, built for H2A employers.</h1>
+                    <p>STOP using checks, cash, and paycards! Simplify H-2A payroll, automate compliance, and empower your workforce with instant digital banking.</p>
+                    
+                    <div class="rating-pill">
+                        <span class="stars">★★★★★</span>
+                        <span></span>
+                        <span style="opacity: 0.5;">|</span>
+                        <a href="#" style="text-decoration: underline;">Trusted by 100+ Employers</a>
+                    </div>
+
+                    <form id="hero-email-form" class="input-wrapper" style="position: relative; overflow: hidden;">
+                        <input type="email" id="hero-email-input" class="input-field" placeholder="What's your work email?" required>
+                        <button type="submit" id="hero-email-btn" class="btn btn-primary" style="border-radius: 6px; margin: 4px; min-width: 160px; position: relative; overflow: hidden;">
+                            <span id="hero-btn-text">End H2-A Stress</span>
+                            <span id="hero-btn-loading" style="display: none; position: absolute; inset: 0; display: none; align-items: center; justify-content: center;">
+                                <svg width="20" height="20" viewBox="0 0 24 24" style="animation: spin 0.8s linear infinite;">
+                                    <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="3" fill="none" stroke-dasharray="31.4 31.4" stroke-linecap="round"/>
+                                </svg>
+                            </span>
+                            <span id="hero-btn-check" style="display: none; position: absolute; inset: 0; align-items: center; justify-content: center;">
+                                <svg id="hero-checkmark" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                                    <polyline points="20 6 9 17 4 12" style="stroke-dasharray: 30; stroke-dashoffset: 30;"/>
+                                </svg>
+                            </span>
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Right Visuals -->
+                <div class="hero-visual">
+                    <!-- Desktop Frame -->
+                    <div class="device-desktop">
+                        <img src="images/FieldTrack.png" alt="Yepzy Employer Dashboard">
+                        <div class="monitor-stand"></div>
+                    </div>
+                    
+                    <!-- Mobile Frame -->
+                    <div class="device-mobile">
+                        <img src="images/mobile.png" alt="Yepzy Worker App">
+                    </div>
+                    
+                    <!-- Card Frame -->
+                    <div class="device-card">
+                        <img src="images/debitcard.png" alt="Yepzy Visa Debit Card">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Logos -->
+            <div class="container">
+                <div class="logo-strip">
+                    <div class="moving-banner">
+                        <!-- Set 1 -->
+                        <span>Everglades Harvesting</span>
+                        <span>Patterson Farms</span>
+                        <span>Superior Golf</span>
+                        <span>Southern Orchards</span>
+                        <span>Legion Ag</span>
+                        <span>Broken T Hay</span>
+                        <span>Sustainable Harvest</span>
+                        <span>Gold Star Amusements</span>
+                        <span>Advanced Agriculture</span>
+                        <span>Critcher Brothers</span>
+                        <span>American Banner</span>
+                        <span>Thomas Carnival</span>
+                        <span>Bottomley Evergreens</span>
+                        <span>Shelby Nursery</span>
+                        <span>Showalter Construction</span>
+                        <span>White Oak Tobacco</span>
+                        <span>Hand Nutrient</span>
+                        <span>Joregensen Equipment</span>
+                        <span>TLC Lawncare</span>
+                        <span>Scott Stubb Livestock</span>
+                        <span>Signor Vineyards</span>
+                        <span>Ranly Cattle</span>
+                        <span>Carolina Fraser Fir</span>
+                        <span>Clarion Locker</span>
+                        <span>Wiggins Watermelons</span>
+                        <span>Piedmont Trade Group</span>
+                        <span>Sharp Farms</span>
+                        <span>Benedicts Produce</span>
+                        <span>Wade Shows</span>
+                        <span>Ledesma Forestry</span>
+                        <!-- Set 2 (Duplicate for smooth loop) -->
+                        <span>Everglades Harvesting</span>
+                        <span>Patterson Farms</span>
+                        <span>Superior Golf</span>
+                        <span>Southern Orchards</span>
+                        <span>Legion Ag</span>
+                        <span>Broken T Hay</span>
+                        <span>Sustainable Harvest</span>
+                        <span>Gold Star Amusements</span>
+                        <span>Advanced Agriculture</span>
+                        <span>Critcher Brothers</span>
+                        <span>American Banner</span>
+                        <span>Thomas Carnival</span>
+                        <span>Bottomley Evergreens</span>
+                        <span>Shelby Nursery</span>
+                        <span>Showalter Construction</span>
+                        <span>White Oak Tobacco</span>
+                        <span>Hand Nutrient</span>
+                        <span>Joregensen Equipment</span>
+                        <span>TLC Lawncare</span>
+                        <span>Scott Stubb Livestock</span>
+                        <span>Signor Vineyards</span>
+                        <span>Ranly Cattle</span>
+                        <span>Carolina Fraser Fir</span>
+                        <span>Clarion Locker</span>
+                        <span>Wiggins Watermelons</span>
+                        <span>Piedmont Trade Group</span>
+                        <span>Sharp Farms</span>
+                        <span>Benedicts Produce</span>
+                        <span>Wade Shows</span>
+                        <span>Ledesma Forestry</span>
+                    </div>
+                </div>
+                <div style="text-align: center; margin-top: 1rem; font-size: 0.875rem; color: var(--text-muted);">
+                    Over $150M in payroll processed for H-2A and H-2B employers last season.
+                </div>
+            </div>
+        </section>
+
+        <!-- Feature Grid (Ramp Style) -->
+        <section class="section">
+            <div class="container">
+                <h2 style="font-size: 2.5rem; margin-bottom: 1rem;">Payroll without the paper</h2>
+                <p style="color: var(--text-muted); font-size: 1.25rem; margin-bottom: 3rem; max-width: 600px;">
+                    Eliminate check-cashing fees and logistical headaches. Yepzy gives you full visibility into your workforce payments.
+                </p>
+
+                <div class="grid-3">
+                    <div class="feature-card">
+                        <div class="icon-circle">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
+                        </div>
+                        <h3>Instant Direct Deposit</h3>
+                        <p>Fund worker accounts immediately upon arrival. No more waiting for checks to clear or driving to the bank.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="icon-circle">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><line x1="20" y1="8" x2="20" y2="14"/><line x1="23" y1="11" x2="17" y2="11"/></svg>
+                        </div>
+                        <h3>Seamless Onboarding</h3>
+                        <p>Issue cards and activate accounts in bulk before workers even step foot on the farm.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="icon-circle">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+                        </div>
+                        <h3>H-2A Compliance</h3>
+                        <p>Automatic generation of compliant wage statements and digital W-2 delivery to every worker.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Success Stories Carousel -->
+        <section class="section case-studies">
+            <div class="container">
+                <h2 style="font-size: 2.5rem; margin-bottom: 1rem; text-align: center;">Success Stories</h2>
+                <p style="color: var(--text-muted); font-size: 1.25rem; margin-bottom: 3rem; text-align: center; max-width: 600px; margin-left: auto; margin-right: auto;">
+                    See how agricultural employers are transforming their payroll operations with Yepzy.
+                </p>
+
+                <div class="carousel-container">
+                    <div class="carousel-track" id="carouselTrack">
+                        <!-- Slide 1: Everglades Harvesting -->
+                        <div class="carousel-slide">
+                            <div class="case-study-card">
+                                <img src="images/everglades.webp" alt="Everglades Harvesting" class="case-study-image">
+                                <div class="case-study-content">
+                                    <div class="case-study-quote">
+                                        Yepzy has become one of our easiest processes. We save tens of thousands of dollars, eliminated printing and mailing, and our admin staff no longer deals with lost cards or payroll issues. It's been a game-changer.
+                                        <div class="case-study-attribution">
+                                            <strong>Benjamin Babb</strong>, Chief Financial Officer, Everglades Harvesting, Inc.
+                                        </div>
+                                    </div>
+                                    <div class="case-study-results">
+                                        Everglades Harvesting transformed payroll and compliance for its entire H-2A workforce. They achieved <strong>100% paperless wage statements</strong>, eliminated printing, shipping, and international mailing costs, and <strong>saved tens of thousands of dollars annually</strong> with streamlined pre-arrival onboarding in Mexico.
+                                    </div>
+                                    <a href="testimonials/Everglades Harvesting Testimonial.pdf" class="case-study-download" download>
+                                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                                        Download Full Success Story (PDF)
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Slide 2: Patterson Farm -->
+                        <div class="carousel-slide">
+                            <div class="case-study-card">
+                                <img src="images/patterson.webp" alt="Patterson Farm" class="case-study-image">
+                                <div class="case-study-content">
+                                    <div class="case-study-quote">
+                                        Yepzy eliminated hours of payroll friction for our team. What used to be a complex pay card process is now a simple ACH workflow, and our workers love having instant access to their money. Yepzy has been a game-changer for us.
+                                        <div class="case-study-attribution">
+                                            <strong>Nora Patterson</strong>, Corporate Secretary, Patterson Farm, Inc.
+                                        </div>
+                                    </div>
+                                    <div class="case-study-results">
+                                        Patterson Farm modernized payroll and financial services for its H-2A workforce, replacing pay cards and paper checks with <strong>seamless direct deposits</strong> to Yepzy accounts. With bilingual onboarding and worker-friendly tools, they <strong>eliminated pay card management</strong> and <strong>reduced administrative burden</strong> while improving worker satisfaction.
+                                    </div>
+                                    <a href="testimonials/Patterson Farm Success Story.pdf" class="case-study-download" download>
+                                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                                        Download Full Success Story (PDF)
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Slide 3: App Farms -->
+                        <div class="carousel-slide">
+                            <div class="case-study-card">
+                                <img src="images/appfarms.png" alt="Appalachian Farms of Cranberry" class="case-study-image">
+                                <div class="case-study-content">
+                                    <div class="case-study-quote">
+                                        Working with Yepzy has been a difference maker for our farm and our workers. Weekly direct deposit, global Visa access, and easy remittances have transformed how we pay our H-2A employees.
+                                        <div class="case-study-attribution">
+                                            <strong>Matthew Horney</strong>, Co-Owner, Appalachian Farms of Cranberry
+                                        </div>
+                                    </div>
+                                    <div class="case-study-results">
+                                        App Farms replaced paper checks, local bank hurdles, and pay cards with <strong>weekly direct deposit</strong> to Yepzy financial accounts. Workers now have immediate access to wages through <strong>Visa debit cards</strong> and <strong>affordable international remittances</strong>, while office staff saved significant time and money.
+                                    </div>
+                                    <a href="testimonials/App Farms Success Story.pdf" class="case-study-download" download>
+                                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                                        Download Full Success Story (PDF)
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="carousel-nav">
+                        <button class="carousel-btn" id="prevBtn" aria-label="Previous slide">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+                        </button>
+                        <div class="carousel-dots" id="carouselDots">
+                            <button class="carousel-dot active" data-slide="0" aria-label="Go to slide 1"></button>
+                            <button class="carousel-dot" data-slide="1" aria-label="Go to slide 2"></button>
+                            <button class="carousel-dot" data-slide="2" aria-label="Go to slide 3"></button>
+                        </div>
+                        <button class="carousel-btn" id="nextBtn" aria-label="Next slide">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Client Video Testimonial - Brent Barbee -->
+        <section class="section video-testimonial">
+            <div class="container">
+                <div class="video-testimonial-grid">
+                    <div class="video-column">
+                        <div class="testimonial-header">
+                            <div class="testimonial-badge">
+                                <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/></svg>
+                                Employer
+                            </div>
+                            <div class="testimonial-info">
+                                <h2 class="testimonial-name">Brent Barbee</h2>
+                                <p class="testimonial-role">Barbee Farms</p>
+                            </div>
+                        </div>
+                        <div class="video-wrapper">
+                            <iframe 
+                                src="https://www.youtube.com/embed/2O_17yykfAk?rel=0&modestbranding=1" 
+                                title="Brent Barbee - Barbee Farms Testimonial"
+                                frameborder="0"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                referrerpolicy="strict-origin-when-cross-origin"
+                                allowfullscreen>
+                            </iframe>
+                        </div>
+                    </div>
+                    <div class="highlights-column">
+                        <div class="highlights-title">Key Takeaways</div>
+                        <div class="highlight-item">
+                            <div class="highlight-icon">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                            </div>
+                            <div class="highlight-content">
+                                <h4>Worker Financial Empowerment</h4>
+                                <p>Workers manage their own W-2s and wage statements independently through the app</p>
+                            </div>
+                        </div>
+                        <div class="highlight-item">
+                            <div class="highlight-icon">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                            </div>
+                            <div class="highlight-content">
+                                <h4>Increased Productivity</h4>
+                                <p>Workers send money home faster—no extended breaks needed</p>
+                            </div>
+                        </div>
+                        <div class="highlight-item">
+                            <div class="highlight-icon">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                            </div>
+                            <div class="highlight-content">
+                                <h4>Streamlined Compliance</h4>
+                                <p>Digital wage statements with acknowledgement of receipt</p>
+                            </div>
+                        </div>
+                        <div class="highlight-item">
+                            <div class="highlight-icon">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                            </div>
+                            <div class="highlight-content">
+                                <h4>Exceptional Support</h4>
+                                <p>Easiest onboarding ever with quick WhatsApp issue resolution</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Worker Video Testimonial -->
+        <section class="section video-testimonial worker-testimonial">
+            <div class="container">
+                <div class="video-testimonial-grid">
+                    <div class="video-column">
+                        <div class="testimonial-header">
+                            <div class="testimonial-badge" style="background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.2); color: var(--text-white);">
+                                <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+                                Workers
+                            </div>
+                            <div class="testimonial-info">
+                                <h2 class="testimonial-name">H-2A Workers Share Their Experience</h2>
+                                <p class="testimonial-role">Real stories from the field</p>
+                            </div>
+                        </div>
+                        <div class="video-wrapper">
+                            <iframe 
+                                src="https://www.youtube.com/embed/3vAX_rJnem4?rel=0&modestbranding=1" 
+                                title="H-2A Worker Testimonials"
+                                frameborder="0"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                referrerpolicy="strict-origin-when-cross-origin"
+                                allowfullscreen>
+                            </iframe>
+                        </div>
+                    </div>
+                    <div class="highlights-column">
+                        <div class="highlights-title">What Workers Say</div>
+                        <div class="highlight-item">
+                            <div class="highlight-icon">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+                            </div>
+                            <div class="highlight-content">
+                                <h4>No More Bank Trips</h4>
+                                <p>No finding drivers or waiting in long lines to cash checks</p>
+                            </div>
+                        </div>
+                        <div class="highlight-item">
+                            <div class="highlight-icon">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                            </div>
+                            <div class="highlight-content">
+                                <h4>Instant Family Support</h4>
+                                <p>Send money to Mexico instantly at lower commission rates</p>
+                            </div>
+                        </div>
+                        <div class="highlight-item">
+                            <div class="highlight-icon">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                            </div>
+                            <div class="highlight-content">
+                                <h4>Enhanced Safety</h4>
+                                <p>No need to carry large amounts of cash</p>
+                            </div>
+                        </div>
+                        <div class="highlight-item">
+                            <div class="highlight-icon">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+                            </div>
+                            <div class="highlight-content">
+                                <h4>Real-Time Tracking</h4>
+                                <p>Monitor income and expenses with full transparency</p>
+                            </div>
+                        </div>
+                        <div class="highlight-item">
+                            <div class="highlight-icon">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+                            </div>
+                            <div class="highlight-content">
+                                <h4>Cross-Border Access</h4>
+                                <p>Use cards even when returning to Mexico</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Final CTA Section -->
+        <section class="section final-cta">
+            <div class="container">
+                <div class="final-cta-content">
+                    <div class="final-cta-badge">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+                        Ready to Transform Your Guest Worker Experience?
+                    </div>
+                    <h2>Let's talk about how Yepzy can work for you</h2>
+                    <p>Join 100+ agricultural employers who have simplified their H-2A payroll, eliminated compliance headaches, and empowered their workforce with modern financial tools.</p>
+                    <div class="final-cta-buttons" style="justify-content: center;">
+                        <a href="#" class="btn btn-primary" onclick="openModal('demo'); return false;">Schedule a Demo</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer>
+        <div class="container">
+            <div style="display: flex; flex-direction: column; align-items: center; text-align: center;">
+                <img src="https://yepzy.com/hs-fs/hubfs/yepzy-logo-horizontal.png?height=44&name=yepzy-logo-horizontal.png&width=149" alt="Yepzy" style="height: 28px; filter: brightness(0) invert(1); opacity: 0.8; margin-bottom: 2rem;">
+                
+                <div style="opacity: 0.6; line-height: 1.6; max-width: 800px;">
+                    <p>Yepzy is a financial technology company and is not a bank. Banking services provided by Thread Bank; Member FDIC. The Yepzy Visa® Debit Card is issued by Thread Bank pursuant to a license from Visa U.S.A. Inc. and may be used everywhere Visa debit cards are accepted.</p>
+                    <p style="margin-top: 1rem;">&copy; 2026 Yepzy Inc. All rights reserved.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- DEMO MODAL -->
+    <dialog id="modal-demo" style="background: #1a2e29; color: white; border: 1px solid rgba(255,255,255,0.1); border-radius: 16px; padding: 2rem; max-width: 500px; width: 90%; margin: auto; box-shadow: 0 50px 100px -20px rgba(0,0,0,0.8);">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1.5rem;">
+            <h2 style="margin:0;">Request a Callback</h2>
+            <button onclick="closeModal()" style="background:none; border:none; color:white; font-size:1.5rem; cursor:pointer;">&times;</button>
+        </div>
+        
+        <!-- Form -->
+        <form id="hubspot-form" style="display:grid; gap:1rem;">
+            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:1rem;">
+                <div>
+                    <input type="text" id="form-firstname" name="firstname" placeholder="First Name *" required
+                        style="width:100%; padding:1rem; border-radius:8px; border:1px solid rgba(255,255,255,0.1); background:rgba(255,255,255,0.05); color:white; font-family:inherit;">
+                </div>
+                <div>
+                    <input type="text" id="form-lastname" name="lastname" placeholder="Last Name *" required
+                        style="width:100%; padding:1rem; border-radius:8px; border:1px solid rgba(255,255,255,0.1); background:rgba(255,255,255,0.05); color:white; font-family:inherit;">
+                </div>
+            </div>
+            <input type="text" id="form-company" name="company" placeholder="Company (Optional)"
+                style="padding:1rem; border-radius:8px; border:1px solid rgba(255,255,255,0.1); background:rgba(255,255,255,0.05); color:white; font-family:inherit;">
+            <input type="email" id="form-email" name="email" placeholder="Work Email *" required
+                style="padding:1rem; border-radius:8px; border:1px solid rgba(255,255,255,0.1); background:rgba(255,255,255,0.05); color:white; font-family:inherit;">
+            <input type="tel" id="form-phone" name="phone" placeholder="Phone Number *" required
+                style="padding:1rem; border-radius:8px; border:1px solid rgba(255,255,255,0.1); background:rgba(255,255,255,0.05); color:white; font-family:inherit;">
+            
+            <button type="submit" id="form-submit-btn" class="btn btn-primary" style="width:100%; padding:1rem;">
+                <span id="btn-text">Request Callback</span>
+                <span id="btn-loading" style="display:none;">
+                    <svg width="20" height="20" viewBox="0 0 24 24" style="animation: spin 1s linear infinite;">
+                        <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="3" fill="none" stroke-dasharray="31.4 31.4" stroke-linecap="round"/>
+                    </svg>
+                </span>
+            </button>
+            
+            <p id="form-error" style="display:none; color:#ff6b6b; font-size:0.875rem; text-align:center; margin:0;"></p>
+        </form>
+        
+        <!-- Success State -->
+        <div id="form-success" style="display:none; text-align:center; padding:2rem 0;">
+            <div style="width:64px; height:64px; background:var(--accent-green); border-radius:50%; display:flex; align-items:center; justify-content:center; margin:0 auto 1.5rem;">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="3">
+                    <polyline points="20 6 9 17 4 12"></polyline>
+                </svg>
+            </div>
+            <h3 style="margin-bottom:0.5rem; color:var(--accent-green);">Thank You!</h3>
+            <p style="color:var(--text-muted); margin-bottom:1.5rem;">We'll be in touch shortly to schedule your demo.</p>
+            <button onclick="closeModal()" class="btn btn-outline">Close</button>
+        </div>
+    </dialog>
+    
+    <style>
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        @keyframes checkDraw {
+            to { stroke-dashoffset: 0; }
+        }
+        @keyframes successPulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        @keyframes buttonSuccess {
+            0% { background-color: var(--accent-green); }
+            100% { background-color: #22c55e; }
+        }
+        #modal-demo input::placeholder {
+            color: rgba(255,255,255,0.4);
+        }
+        #modal-demo input:focus {
+            outline: none;
+            border-color: var(--accent-green);
+            background: rgba(255,255,255,0.1);
+        }
+        /* Hero email button animations */
+        #hero-email-btn.loading #hero-btn-text { opacity: 0; }
+        #hero-email-btn.loading #hero-btn-loading { display: flex !important; }
+        #hero-email-btn.success {
+            background-color: #22c55e !important;
+            animation: successPulse 0.4s ease;
+        }
+        #hero-email-btn.success #hero-btn-text { opacity: 0; }
+        #hero-email-btn.success #hero-btn-check { display: flex !important; }
+        #hero-email-btn.success #hero-checkmark polyline {
+            animation: checkDraw 0.4s ease forwards;
+        }
+        #hero-email-input.captured {
+            background: rgba(34, 197, 94, 0.1);
+            border-color: rgba(34, 197, 94, 0.3);
+        }
+    </style>
+
+    <script>
+        // ==========================================
+        // Modal Functions
+        // ==========================================
+        let capturedEmail = ''; // Store email captured from hero form
+
+        function openModal(type, prefillEmail = '') {
+            const modal = document.getElementById('modal-demo');
+            // Reset form state when opening
+            resetFormState();
+            
+            // Pre-fill email if provided
+            if (prefillEmail) {
+                document.getElementById('form-email').value = prefillEmail;
+            }
+            
+            modal.showModal();
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('modal-demo');
+            modal.close();
+            // Reset form after a short delay to avoid visual glitch
+            setTimeout(resetFormState, 300);
+        }
+
+        function resetFormState() {
+            const form = document.getElementById('hubspot-form');
+            const successDiv = document.getElementById('form-success');
+            const errorP = document.getElementById('form-error');
+            
+            form.style.display = 'grid';
+            form.reset();
+            successDiv.style.display = 'none';
+            errorP.style.display = 'none';
+            errorP.textContent = '';
+        }
+
+        // Close modal when clicking backdrop
+        document.getElementById('modal-demo').addEventListener('click', (e) => {
+            if (e.target === e.currentTarget) {
+                closeModal();
+            }
+        });
+
+        // ==========================================
+        // Hero Email Capture with Animation
+        // ==========================================
+        document.getElementById('hero-email-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const emailInput = document.getElementById('hero-email-input');
+            const btn = document.getElementById('hero-email-btn');
+            const email = emailInput.value.trim();
+            
+            // Validate email
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!email || !emailRegex.test(email)) {
+                emailInput.style.borderColor = '#ff6b6b';
+                emailInput.focus();
+                setTimeout(() => { emailInput.style.borderColor = ''; }, 2000);
+                return;
+            }
+            
+            // Show loading state
+            btn.classList.add('loading');
+            btn.disabled = true;
+            
+            try {
+                // Capture email in HubSpot (fire and forget - don't block on errors)
+                fetch('/api/capture-email', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        email,
+                        pageUri: window.location.href,
+                        hutk: getCookie('hubspotutk') || null,
+                    }),
+                }).catch(() => {}); // Silently ignore errors
+                
+                // Small delay for loading animation
+                await new Promise(resolve => setTimeout(resolve, 600));
+                
+                // Show success checkmark
+                btn.classList.remove('loading');
+                btn.classList.add('success');
+                emailInput.classList.add('captured');
+                
+                // Store email for pre-filling
+                capturedEmail = email;
+                
+                // Wait for checkmark animation, then open modal
+                await new Promise(resolve => setTimeout(resolve, 800));
+                
+                // Reset button state
+                btn.classList.remove('success');
+                btn.disabled = false;
+                emailInput.classList.remove('captured');
+                
+                // Open modal with pre-filled email
+                openModal('demo', capturedEmail);
+                
+            } catch (error) {
+                console.error('Email capture error:', error);
+                btn.classList.remove('loading');
+                btn.disabled = false;
+                // Still open modal on error
+                openModal('demo', email);
+            }
+        });
+
+        // ==========================================
+        // HubSpot Form Submission
+        // ==========================================
+        
+        // Helper to get cookie value
+        function getCookie(name) {
+            const value = `; ${document.cookie}`;
+            const parts = value.split(`; ${name}=`);
+            if (parts.length === 2) return parts.pop().split(';').shift();
+            return null;
+        }
+
+        // Form submission handler
+        document.getElementById('hubspot-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const form = e.target;
+            const submitBtn = document.getElementById('form-submit-btn');
+            const btnText = document.getElementById('btn-text');
+            const btnLoading = document.getElementById('btn-loading');
+            const errorP = document.getElementById('form-error');
+            const successDiv = document.getElementById('form-success');
+
+            // Get form values
+            const firstname = document.getElementById('form-firstname').value.trim();
+            const lastname = document.getElementById('form-lastname').value.trim();
+            const company = document.getElementById('form-company').value.trim();
+            const email = document.getElementById('form-email').value.trim();
+            const phone = document.getElementById('form-phone').value.trim();
+
+            // Client-side validation
+            if (!firstname || !lastname || !email || !phone) {
+                errorP.textContent = 'Please fill in all required fields.';
+                errorP.style.display = 'block';
+                return;
+            }
+
+            // Show loading state
+            submitBtn.disabled = true;
+            btnText.style.display = 'none';
+            btnLoading.style.display = 'inline-flex';
+            errorP.style.display = 'none';
+
+            try {
+                const response = await fetch('/api/submit-form', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        firstname,
+                        lastname,
+                        company,
+                        email,
+                        phone,
+                        pageUri: window.location.href,
+                        hutk: getCookie('hubspotutk') || null,
+                    }),
+                });
+
+                const data = await response.json();
+
+                if (data.ok) {
+                    // Show success state
+                    form.style.display = 'none';
+                    successDiv.style.display = 'block';
+                } else {
+                    // Show error
+                    const errorMessage = data.errors 
+                        ? data.errors.join(', ') 
+                        : data.error || 'Something went wrong. Please try again.';
+                    errorP.textContent = errorMessage;
+                    errorP.style.display = 'block';
+                }
+            } catch (error) {
+                console.error('Form submission error:', error);
+                errorP.textContent = 'Network error. Please check your connection and try again.';
+                errorP.style.display = 'block';
+            } finally {
+                // Reset button state
+                submitBtn.disabled = false;
+                btnText.style.display = 'inline';
+                btnLoading.style.display = 'none';
+            }
+        });
+
+        // ==========================================
+        // Carousel Functionality
+        // ==========================================
+        const track = document.getElementById('carouselTrack');
+        const dots = document.querySelectorAll('.carousel-dot');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        let currentSlide = 0;
+        const totalSlides = 3;
+
+        function updateCarousel() {
+            track.style.transform = `translateX(-${currentSlide * 100}%)`;
+            
+            dots.forEach((dot, index) => {
+                dot.classList.toggle('active', index === currentSlide);
+            });
+
+            prevBtn.disabled = currentSlide === 0;
+            nextBtn.disabled = currentSlide === totalSlides - 1;
+        }
+
+        prevBtn.addEventListener('click', () => {
+            if (currentSlide > 0) {
+                currentSlide--;
+                updateCarousel();
+            }
+        });
+
+        nextBtn.addEventListener('click', () => {
+            if (currentSlide < totalSlides - 1) {
+                currentSlide++;
+                updateCarousel();
+            }
+        });
+
+        dots.forEach(dot => {
+            dot.addEventListener('click', () => {
+                currentSlide = parseInt(dot.dataset.slide);
+                updateCarousel();
+            });
+        });
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft' && currentSlide > 0) {
+                currentSlide--;
+                updateCarousel();
+            } else if (e.key === 'ArrowRight' && currentSlide < totalSlides - 1) {
+                currentSlide++;
+                updateCarousel();
+            }
+        });
+
+        // Touch/swipe support
+        let touchStartX = 0;
+        let touchEndX = 0;
+
+        track.addEventListener('touchstart', (e) => {
+            touchStartX = e.changedTouches[0].screenX;
+        }, { passive: true });
+
+        track.addEventListener('touchend', (e) => {
+            touchEndX = e.changedTouches[0].screenX;
+            handleSwipe();
+        }, { passive: true });
+
+        function handleSwipe() {
+            const swipeThreshold = 50;
+            const diff = touchStartX - touchEndX;
+
+            if (Math.abs(diff) > swipeThreshold) {
+                if (diff > 0 && currentSlide < totalSlides - 1) {
+                    currentSlide++;
+                    updateCarousel();
+                } else if (diff < 0 && currentSlide > 0) {
+                    currentSlide--;
+                    updateCarousel();
+                }
+            }
+        }
+
+        // Initialize
+        updateCarousel();
+    </script>
+
+</body>
+</html>
