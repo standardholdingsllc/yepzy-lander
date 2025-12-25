@@ -73,13 +73,12 @@ export default async function handler(req, res) {
       hubspotPayload.context.hutk = hutk;
     }
 
-    // Submit to HubSpot Forms API (secure endpoint)
-    const hubspotUrl = `https://api.hubapi.com/submissions/v3/integration/secure/submit/${portalId}/${formGuid}`;
+    // Submit to HubSpot Forms API (public endpoint - works without form pre-existing)
+    const hubspotUrl = `https://api.hsforms.com/submissions/v3/integration/submit/${portalId}/${formGuid}`;
 
     const hubspotResponse = await fetch(hubspotUrl, {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer ${token}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(hubspotPayload),
