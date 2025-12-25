@@ -33,8 +33,16 @@ export default async function handler(req, res) {
     const token = process.env.HUBSPOT_PRIVATE_APP_TOKEN;
 
     if (!portalId || !formGuid || !token) {
-      console.error('Missing HubSpot environment variables');
-      return res.status(500).json({ ok: false, error: 'Server configuration error' });
+      const missing = [];
+      if (!portalId) missing.push('HUBSPOT_PORTAL_ID');
+      if (!formGuid) missing.push('HUBSPOT_FORM_GUID');
+      if (!token) missing.push('HUBSPOT_PRIVATE_APP_TOKEN');
+      console.error('Missing HubSpot environment variables:', missing.join(', '));
+      return res.status(500).json({ 
+        ok: false, 
+        error: 'Server configuration error',
+        debug: `Missing: ${missing.join(', ')}`
+      });
     }
 
     // Build HubSpot form submission payload
