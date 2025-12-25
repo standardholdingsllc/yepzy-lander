@@ -885,7 +885,7 @@
             </a>
             
             <div class="auth-buttons">
-                <a href="#" class="btn btn-primary" onclick="openModal('demo')">See a demo</a>
+                <a href="#" class="btn btn-primary" onclick="openModal('demo'); return false;">See a demo</a>
             </div>
         </div>
     </header>
@@ -1291,8 +1291,8 @@
                     <h2>Let's talk about how Yepzy can work for you</h2>
                     <p>Join 100+ agricultural employers who have simplified their H-2A payroll, eliminated compliance headaches, and empowered their workforce with modern financial tools.</p>
                     <div class="final-cta-buttons">
-                        <a href="#" class="btn btn-primary" onclick="openModal('demo')">Schedule a Demo</a>
-                        <a href="#" class="btn btn-outline">Contact Sales</a>
+                        <a href="#" class="btn btn-primary" onclick="openModal('demo'); return false;">Schedule a Demo</a>
+                        <a href="#" class="btn btn-outline" onclick="openModal('demo'); return false;">Contact Sales</a>
                     </div>
                 </div>
             </div>
@@ -1408,6 +1408,35 @@
 
         // Initialize
         updateCarousel();
+
+        // ==========================================
+        // Modal Functions (for CTA buttons)
+        // ==========================================
+        function openModal(type) {
+            const modal = document.getElementById('modal-demo');
+            if (!modal) {
+                console.error('Modal not found');
+                return;
+            }
+            modal.showModal();
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('modal-demo');
+            if (modal) {
+                modal.close();
+            }
+        }
+
+        // Close modal when clicking backdrop
+        const modal = document.getElementById('modal-demo');
+        if (modal) {
+            modal.addEventListener('click', (e) => {
+                if (e.target === e.currentTarget) {
+                    closeModal();
+                }
+            });
+        }
     </script>
 
 </body>
