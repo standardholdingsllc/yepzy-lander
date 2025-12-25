@@ -1423,18 +1423,23 @@
 
     <script>
         // ==========================================
-        // Modal Functions
+        // Modal Functions (global scope for onclick handlers)
         // ==========================================
         let capturedEmail = ''; // Store email captured from hero form
 
         function openModal(type, prefillEmail = '') {
             const modal = document.getElementById('modal-demo');
+            if (!modal) {
+                console.error('Modal not found');
+                return;
+            }
             // Reset form state when opening
             resetFormState();
             
             // Pre-fill email if provided
             if (prefillEmail) {
-                document.getElementById('form-email').value = prefillEmail;
+                const emailField = document.getElementById('form-email');
+                if (emailField) emailField.value = prefillEmail;
             }
             
             modal.showModal();
@@ -1442,9 +1447,11 @@
 
         function closeModal() {
             const modal = document.getElementById('modal-demo');
-            modal.close();
-            // Reset form after a short delay to avoid visual glitch
-            setTimeout(resetFormState, 300);
+            if (modal) {
+                modal.close();
+                // Reset form after a short delay to avoid visual glitch
+                setTimeout(resetFormState, 300);
+            }
         }
 
         function resetFormState() {
@@ -1452,90 +1459,17 @@
             const successDiv = document.getElementById('form-success');
             const errorP = document.getElementById('form-error');
             
-            form.style.display = 'grid';
-            form.reset();
-            successDiv.style.display = 'none';
-            errorP.style.display = 'none';
-            errorP.textContent = '';
+            if (form) {
+                form.style.display = 'grid';
+                form.reset();
+            }
+            if (successDiv) successDiv.style.display = 'none';
+            if (errorP) {
+                errorP.style.display = 'none';
+                errorP.textContent = '';
+            }
         }
 
-        // Close modal when clicking backdrop
-        document.getElementById('modal-demo').addEventListener('click', (e) => {
-            if (e.target === e.currentTarget) {
-                closeModal();
-            }
-        });
-
-        // ==========================================
-        // Hero Email Capture with Animation
-        // ==========================================
-        document.getElementById('hero-email-form').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            
-            const emailInput = document.getElementById('hero-email-input');
-            const btn = document.getElementById('hero-email-btn');
-            const email = emailInput.value.trim();
-            
-            // Validate email
-            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            if (!email || !emailRegex.test(email)) {
-                emailInput.style.borderColor = '#ff6b6b';
-                emailInput.focus();
-                setTimeout(() => { emailInput.style.borderColor = ''; }, 2000);
-                return;
-            }
-            
-            // Show loading state
-            btn.classList.add('loading');
-            btn.disabled = true;
-            
-            try {
-                // Capture email in HubSpot (fire and forget - don't block on errors)
-                fetch('/api/capture-email', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        email,
-                        pageUri: window.location.href,
-                        hutk: getCookie('hubspotutk') || null,
-                    }),
-                }).catch(() => {}); // Silently ignore errors
-                
-                // Small delay for loading animation
-                await new Promise(resolve => setTimeout(resolve, 600));
-                
-                // Show success checkmark
-                btn.classList.remove('loading');
-                btn.classList.add('success');
-                emailInput.classList.add('captured');
-                
-                // Store email for pre-filling
-                capturedEmail = email;
-                
-                // Wait for checkmark animation, then open modal
-                await new Promise(resolve => setTimeout(resolve, 800));
-                
-                // Reset button state
-                btn.classList.remove('success');
-                btn.disabled = false;
-                emailInput.classList.remove('captured');
-                
-                // Open modal with pre-filled email
-                openModal('demo', capturedEmail);
-                
-            } catch (error) {
-                console.error('Email capture error:', error);
-                btn.classList.remove('loading');
-                btn.disabled = false;
-                // Still open modal on error
-                openModal('demo', email);
-            }
-        });
-
-        // ==========================================
-        // HubSpot Form Submission
-        // ==========================================
-        
         // Helper to get cookie value
         function getCookie(name) {
             const value = `; ${document.cookie}`;
@@ -1544,8 +1478,95 @@
             return null;
         }
 
-        // Form submission handler
-        document.getElementById('hubspot-form').addEventListener('submit', async (e) => {
+        // ==========================================
+        // Initialize event listeners after DOM loads
+        // ==========================================
+        document.addEventListener('DOMContentLoaded', function() {
+            // Close modal when clicking backdrop
+            const modal = document.getElementById('modal-demo');
+            if (modal) {
+                modal.addEventListener('click', (e) => {
+                    if (e.target === e.currentTarget) {
+                        closeModal();
+                    }
+                });
+            }
+
+            // ==========================================
+            // Hero Email Capture with Animation
+            // ==========================================
+            const heroForm = document.getElementById('hero-email-form');
+            if (heroForm) {
+                heroForm.addEventListener('submit', async (e) => {
+                    e.preventDefault();
+                    
+                    const emailInput = document.getElementById('hero-email-input');
+                    const btn = document.getElementById('hero-email-btn');
+                    const email = emailInput.value.trim();
+                    
+                    // Validate email
+                    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                    if (!email || !emailRegex.test(email)) {
+                        emailInput.style.borderColor = '#ff6b6b';
+                        emailInput.focus();
+                        setTimeout(() => { emailInput.style.borderColor = ''; }, 2000);
+                        return;
+                    }
+                    
+                    // Show loading state
+                    btn.classList.add('loading');
+                    btn.disabled = true;
+                    
+                    try {
+                        // Capture email in HubSpot (fire and forget - don't block on errors)
+                        fetch('/api/capture-email', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({
+                                email,
+                                pageUri: window.location.href,
+                                hutk: getCookie('hubspotutk') || null,
+                            }),
+                        }).catch(() => {}); // Silently ignore errors
+                        
+                        // Small delay for loading animation
+                        await new Promise(resolve => setTimeout(resolve, 600));
+                        
+                        // Show success checkmark
+                        btn.classList.remove('loading');
+                        btn.classList.add('success');
+                        emailInput.classList.add('captured');
+                        
+                        // Store email for pre-filling
+                        capturedEmail = email;
+                        
+                        // Wait for checkmark animation, then open modal
+                        await new Promise(resolve => setTimeout(resolve, 800));
+                        
+                        // Reset button state
+                        btn.classList.remove('success');
+                        btn.disabled = false;
+                        emailInput.classList.remove('captured');
+                        
+                        // Open modal with pre-filled email
+                        openModal('demo', capturedEmail);
+                        
+                    } catch (error) {
+                        console.error('Email capture error:', error);
+                        btn.classList.remove('loading');
+                        btn.disabled = false;
+                        // Still open modal on error
+                        openModal('demo', email);
+                    }
+                });
+            }
+
+            // ==========================================
+            // HubSpot Form Submission
+            // ==========================================
+            const hubspotForm = document.getElementById('hubspot-form');
+            if (hubspotForm) {
+                hubspotForm.addEventListener('submit', async (e) => {
             e.preventDefault();
             
             const form = e.target;
@@ -1616,91 +1637,100 @@
                 btnText.style.display = 'inline';
                 btnLoading.style.display = 'none';
             }
-        });
-
-        // ==========================================
-        // Carousel Functionality
-        // ==========================================
-        const track = document.getElementById('carouselTrack');
-        const dots = document.querySelectorAll('.carousel-dot');
-        const prevBtn = document.getElementById('prevBtn');
-        const nextBtn = document.getElementById('nextBtn');
-        let currentSlide = 0;
-        const totalSlides = 3;
-
-        function updateCarousel() {
-            track.style.transform = `translateX(-${currentSlide * 100}%)`;
-            
-            dots.forEach((dot, index) => {
-                dot.classList.toggle('active', index === currentSlide);
-            });
-
-            prevBtn.disabled = currentSlide === 0;
-            nextBtn.disabled = currentSlide === totalSlides - 1;
-        }
-
-        prevBtn.addEventListener('click', () => {
-            if (currentSlide > 0) {
-                currentSlide--;
-                updateCarousel();
+                });
             }
-        });
 
-        nextBtn.addEventListener('click', () => {
-            if (currentSlide < totalSlides - 1) {
-                currentSlide++;
-                updateCarousel();
+            // ==========================================
+            // Carousel Functionality
+            // ==========================================
+            const track = document.getElementById('carouselTrack');
+            const dots = document.querySelectorAll('.carousel-dot');
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+            let currentSlide = 0;
+            const totalSlides = 3;
+
+            function updateCarousel() {
+                if (!track) return;
+                track.style.transform = `translateX(-${currentSlide * 100}%)`;
+                
+                dots.forEach((dot, index) => {
+                    dot.classList.toggle('active', index === currentSlide);
+                });
+
+                if (prevBtn) prevBtn.disabled = currentSlide === 0;
+                if (nextBtn) nextBtn.disabled = currentSlide === totalSlides - 1;
             }
-        });
 
-        dots.forEach(dot => {
-            dot.addEventListener('click', () => {
-                currentSlide = parseInt(dot.dataset.slide);
-                updateCarousel();
-            });
-        });
-
-        // Keyboard navigation
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'ArrowLeft' && currentSlide > 0) {
-                currentSlide--;
-                updateCarousel();
-            } else if (e.key === 'ArrowRight' && currentSlide < totalSlides - 1) {
-                currentSlide++;
-                updateCarousel();
+            if (prevBtn) {
+                prevBtn.addEventListener('click', () => {
+                    if (currentSlide > 0) {
+                        currentSlide--;
+                        updateCarousel();
+                    }
+                });
             }
-        });
 
-        // Touch/swipe support
-        let touchStartX = 0;
-        let touchEndX = 0;
+            if (nextBtn) {
+                nextBtn.addEventListener('click', () => {
+                    if (currentSlide < totalSlides - 1) {
+                        currentSlide++;
+                        updateCarousel();
+                    }
+                });
+            }
 
-        track.addEventListener('touchstart', (e) => {
-            touchStartX = e.changedTouches[0].screenX;
-        }, { passive: true });
-
-        track.addEventListener('touchend', (e) => {
-            touchEndX = e.changedTouches[0].screenX;
-            handleSwipe();
-        }, { passive: true });
-
-        function handleSwipe() {
-            const swipeThreshold = 50;
-            const diff = touchStartX - touchEndX;
-
-            if (Math.abs(diff) > swipeThreshold) {
-                if (diff > 0 && currentSlide < totalSlides - 1) {
-                    currentSlide++;
+            dots.forEach(dot => {
+                dot.addEventListener('click', () => {
+                    currentSlide = parseInt(dot.dataset.slide);
                     updateCarousel();
-                } else if (diff < 0 && currentSlide > 0) {
+                });
+            });
+
+            // Keyboard navigation
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'ArrowLeft' && currentSlide > 0) {
                     currentSlide--;
                     updateCarousel();
+                } else if (e.key === 'ArrowRight' && currentSlide < totalSlides - 1) {
+                    currentSlide++;
+                    updateCarousel();
+                }
+            });
+
+            // Touch/swipe support
+            let touchStartX = 0;
+            let touchEndX = 0;
+
+            if (track) {
+                track.addEventListener('touchstart', (e) => {
+                    touchStartX = e.changedTouches[0].screenX;
+                }, { passive: true });
+
+                track.addEventListener('touchend', (e) => {
+                    touchEndX = e.changedTouches[0].screenX;
+                    handleSwipe();
+                }, { passive: true });
+            }
+
+            function handleSwipe() {
+                const swipeThreshold = 50;
+                const diff = touchStartX - touchEndX;
+
+                if (Math.abs(diff) > swipeThreshold) {
+                    if (diff > 0 && currentSlide < totalSlides - 1) {
+                        currentSlide++;
+                        updateCarousel();
+                    } else if (diff < 0 && currentSlide > 0) {
+                        currentSlide--;
+                        updateCarousel();
+                    }
                 }
             }
-        }
 
-        // Initialize
-        updateCarousel();
+            // Initialize
+            updateCarousel();
+        }); // End DOMContentLoaded
     </script>
 
 </body>
