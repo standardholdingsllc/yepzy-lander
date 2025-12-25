@@ -4,10 +4,10 @@
   "buildCommand": "echo 'Static site - no build required'",
   "functions": {
     "api/submit-form.js": {
-      "runtime": "@vercel/node@3.0.0"
+      "runtime": "@vercel/node@3.2.0"
     },
     "api/capture-email.js": {
-      "runtime": "@vercel/node@3.0.0"
+      "runtime": "@vercel/node@3.2.0"
     }
   },
   "rewrites": [
