@@ -1,25 +1,8 @@
 {
   "name": "yepzy-lander",
   "version": "1.0.0",
-  "description": "Yepzy - Financial Services for Guest Workers",
-  "main": "index.html",
-  "scripts": {
-    "dev": "serve .",
-    "build": "echo 'Static site - no build required'",
-    "start": "serve ."
-  },
-  "keywords": [
-    "yepzy",
-    "financial-services",
-    "guest-workers",
-    "h2a",
-    "h2b",
-    "payroll",
-    "banking"
-  ],
-  "author": "Standard Holdings LLC",
-  "license": "ISC",
-  "devDependencies": {
-    "serve": "^14.2.1"
+  "private": true,
+  "engines": {
+    "node": "18.x"
   }
 }
