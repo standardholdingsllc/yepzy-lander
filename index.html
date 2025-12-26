@@ -1564,6 +1564,9 @@
                     const data = await response.json();
                     
                     if (data.ok) {
+                        // Fire Google Ads Conversion
+                        gtag('event', 'conversion', {'send_to': 'AW-17832063973/apF_CNPrqdcbEOXn_rZC'});
+                        
                         // Show success state
                         hubspotForm.style.display = 'none';
                         successDiv.style.display = 'block';
