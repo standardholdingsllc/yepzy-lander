@@ -922,8 +922,8 @@
                         <a href="#" style="text-decoration: underline;">Trusted by 100+ Employers</a>
                     </div>
 
-                    <form onsubmit="event.preventDefault(); openModal('demo');" class="input-wrapper">
-                        <input type="email" class="input-field" placeholder="What's your work email?" required>
+                    <form id="hero-email-form" onsubmit="event.preventDefault(); openModal('demo', document.getElementById('hero-email-input').value.trim());" class="input-wrapper">
+                        <input type="email" id="hero-email-input" class="input-field" placeholder="What's your work email?" required>
                         <button type="submit" class="btn btn-primary" style="border-radius: 6px; margin: 4px;">End H2-A Stress</button>
                     </form>
                 </div>
@@ -1467,7 +1467,7 @@
             return false;
         }
 
-        function openModal(type) {
+        function openModal(type, prefillEmail = '') {
             const modal = document.getElementById('modal-demo');
             if (!modal) {
                 console.error('Modal not found');
@@ -1475,6 +1475,13 @@
             }
             // Reset form state when opening
             resetFormState();
+
+            // Pre-fill the email captured from the hero form, while keeping it editable.
+            if (prefillEmail) {
+                const emailField = document.getElementById('form-email');
+                if (emailField) emailField.value = prefillEmail;
+            }
+
             modal.showModal();
         }
 
