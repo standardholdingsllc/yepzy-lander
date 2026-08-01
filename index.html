@@ -1452,6 +1452,21 @@
         // ==========================================
         // Modal Functions (for CTA buttons)
         // ==========================================
+        function gtag_report_conversion(url) {
+            var callback = function () {
+                if (typeof(url) != 'undefined') {
+                    window.location = url;
+                }
+            };
+            gtag('event', 'conversion', {
+                'send_to': 'AW-305978315/aOieCJDfgNocEMu385EB',
+                'value': 1.0,
+                'currency': 'USD',
+                'event_callback': callback
+            });
+            return false;
+        }
+
         function openModal(type) {
             const modal = document.getElementById('modal-demo');
             if (!modal) {
@@ -1555,10 +1570,8 @@
                     const data = await response.json();
                     
                     if (data.ok) {
-                        // Track successful form submissions in Google Ads.
-                        gtag('event', 'form_submit', {
-                            'send_to': 'AW-305978315'
-                        });
+                        // Track successful lead form conversion in Google Ads.
+                        gtag_report_conversion();
 
                         // Show success state
                         hubspotForm.style.display = 'none';
