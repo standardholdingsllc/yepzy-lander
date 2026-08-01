@@ -1626,8 +1626,10 @@
                 const data = await response.json();
 
                 if (data.ok) {
-                    // Fire Google Ads Conversion
-                    gtag('event', 'conversion', {'send_to': 'AW-17832063973/apF_CNPrqdcbEOXn_rZC'});
+                    // Track successful form submissions in Google Ads.
+                    gtag('event', 'form_submit', {
+                        'send_to': 'AW-305978315'
+                    });
                     
                     // Show success state
                     form.style.display = 'none';
