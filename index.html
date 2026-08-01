@@ -2,13 +2,13 @@
 <html lang="en">
 <head>
     <!-- Google tag (gtag.js) - Analytics & Ads -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-485MNGBKN2"></script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=AW-305978315"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
       gtag('config', 'G-485MNGBKN2');
-      gtag('config', 'AW-17832063973');
+      gtag('config', 'AW-305978315');
     </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -1555,8 +1555,10 @@
                     const data = await response.json();
                     
                     if (data.ok) {
-                        // Fire Google Ads Conversion
-                        gtag('event', 'conversion', {'send_to': 'AW-17832063973/apF_CNPrqdcbEOXn_rZC'});
+                        // Track successful form submissions in Google Ads.
+                        gtag('event', 'form_submit', {
+                            'send_to': 'AW-305978315'
+                        });
 
                         // Show success state
                         hubspotForm.style.display = 'none';
