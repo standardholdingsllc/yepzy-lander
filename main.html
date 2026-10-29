@@ -20,6 +20,14 @@
     t.src=v;s=b.getElementsByTagName(e)[0];
     s.parentNode.insertBefore(t,s)}(window, document,'script',
     'https://connect.facebook.net/en_US/fbevents.js');
+    try {
+      const leadMarkerUrl = new URL(window.location.href);
+      if (leadMarkerUrl.searchParams.get('lead_submitted') === '1' &&
+          sessionStorage.getItem('yepzy_lead_submission_marker') !== '1') {
+        leadMarkerUrl.searchParams.delete('lead_submitted');
+        window.history.replaceState({}, '', leadMarkerUrl);
+      }
+    } catch (error) {}
     fbq('init', '1662990338791515');
     fbq('track', 'PageView');
     </script>
@@ -1658,6 +1666,14 @@
                 if (data.ok) {
                     // Track successful lead form conversion in Google Ads.
                     gtag_report_conversion();
+                    // Give Meta a success-only URL for a URL-based conversion.
+                    try {
+                        sessionStorage.setItem('yepzy_lead_submission_marker', '1');
+                    } catch (error) {}
+                    const conversionUrl = new URL(window.location.href);
+                    conversionUrl.searchParams.set('lead_submitted', '1');
+                    window.history.replaceState({}, '', conversionUrl);
+                    fbq('track', 'PageView');
                     fbq('track', 'Lead');
                     
                     // Show success state
