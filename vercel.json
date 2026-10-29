@@ -2,14 +2,6 @@
   "version": 2,
   "outputDirectory": ".",
   "buildCommand": "echo 'Static site - no build required'",
-  "functions": {
-    "api/submit-form.js": {
-      "runtime": "@vercel/node@3.2.0"
-    },
-    "api/capture-email.js": {
-      "runtime": "@vercel/node@3.2.0"
-    }
-  },
   "rewrites": [
     { "source": "/api/submit-form", "destination": "/api/submit-form.js" },
     { "source": "/api/capture-email", "destination": "/api/capture-email.js" }
